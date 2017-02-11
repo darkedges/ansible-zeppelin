@@ -1,0 +1,23 @@
+zeppelin_version: 0.7.0
+
+zeppelin_mirror: http://apache.mirror.digitalpacific.com.au
+zeppelin_src_file: "zeppelin-{{ zeppelin_version }}-bin-netinst.tgz"
+zeppelin_url: "{{ zeppelin_mirror }}/zeppelin/zeppelin-{{ zeppelin_version }}/{{ zeppelin_src_file }}"
+
+zeppelin_install_spark: no
+zeppelin_install_sbt: no
+
+zeppelin_usr_parent_dir: "/usr/lib"  
+zeppelin_usr_dir: "{{ zeppelin_usr_parent_dir }}/zeppelin"   
+zeppelin_lib_dir: "/var/lib/zeppelin"
+zeppelin_log_dir: "/var/log/zeppelin"
+zeppelin_run_dir: "/run/zeppelin"
+zeppelin_conf_dir: /etc/zeppelin
+
+
+zeppelin_user: "zeppelin"        
+zeppelin_user_shell: "/usr/bin/bash"  
+zeppelin_user_groups: []      
+
+zeppelin_install_data_starwarskid: no
+zeppelin_dataset_dir:  /opt/dataset  

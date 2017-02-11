@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: Nicholas Irving
+  description: An Ansible role for installing Apache Zeppelin.
+  company: DarkEdges
+  license: Apache
+  min_ansible_version: 1.8
+  platforms:
+  categories:
+  - system
+dependencies:
+  - { role: "azavea.ansible-spark",  when: zeppelin_install_spark }
+  - { role: "darkedges.sbt",  when: zeppelin_install_sbt }

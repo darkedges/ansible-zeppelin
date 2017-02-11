@@ -1,0 +1,84 @@
+---
+
+- debug: msg="Zeppelin install"
+
+# - name: Create service account for Zeppelin
+#   user: name={{ zeppelin_user }}
+#         system=yes
+#         home={{ zeppelin_lib_dir }}
+#         shell={{ zeppelin_user_shell }}
+#         state=present
+#         groups="{{ zeppelin_user_groups | join(',') }}"
+
+# - name: Ensure Spark log and run directories exist
+#   file: path="{{ item }}"
+#         owner={{ zeppelin_user }}
+#         group={{ zeppelin_user }}
+#         mode=0755
+#         state=directory
+#   with_items:
+#     - "{{ zeppelin_log_dir }}"
+#     - "{{ zeppelin_run_dir }}"
+
+# - name: Download Zeppelin distribution
+#   get_url: url="{{ zeppelin_url }}"
+#            dest="/tmp/{{ zeppelin_src_file }}"
+#            checksum="md5:d5602ec30b578563837e874f87238de5"
+
+# - name: Extract Zeppelin distribution
+#   unarchive: src="/tmp/{{ zeppelin_src_file }}"
+#              dest="{{ zeppelin_usr_parent_dir }}"
+#              copy=no
+#              creates="{{ zeppelin_usr_parent_dir }}/zeppelin-{{ zeppelin_version }}-bin-netinst"
+#              owner="{{ zeppelin_user }}"
+
+# - name: Ensure Zeppelin configuration directory exists
+#   file: path="{{ zeppelin_conf_dir }}"
+#         state=directory
+
+# - name: Setup Zeppelin distribution symlinks
+#   file: src="{{ item.src }}"
+#         dest="{{ item.dest }}"
+#         state=link
+#   with_items:
+#     - { src: "{{ zeppelin_usr_parent_dir }}/zeppelin-{{ zeppelin_version }}-bin-netinst", dest: "{{ zeppelin_usr_dir }}" }
+#     - { src: "{{ zeppelin_usr_parent_dir }}/zeppelin-{{ zeppelin_version }}-bin-netinst/conf", dest: "{{ zeppelin_conf_dir }}/conf" }
+
+# - name: Create Zeppelin Env configuration
+#   template: src=conf/zeppelin-env.sh.j2
+#             dest="{{ zeppelin_conf_dir }}/conf/zeppelin-env.sh"
+#             mode=0755
+
+# - name: Create Zeppelin Systemd Service File
+#   template: src=etc/systemd/system/zeppelin.service.j2
+#             dest="/etc/systemd/system/zeppelin.service"
+#             mode=0644
+
+- name: copy any notebook files
+  synchronize: src="../zeppelin/notebook"
+               dest="{{ zeppelin_usr_dir }}"
+  notify: restart zeppelin
+
+- name: bug in synchronize
+  file: path="{{ zeppelin_usr_dir }}/notebook"
+        state=directory
+        mode=0755
+        owner="{{ zeppelin_user }}"
+        group="{{ zeppelin_user }}"
+        recurse="yes"
+
+- name: copy any StarWarsKids data files
+  synchronize: src="../zeppelin/data/starwarskid/"
+               dest="{{ zeppelin_dataset_dir }}"
+
+- name: bug in synchronize
+  file: path="{{ zeppelin_dataset_dir }}"
+        state=directory
+        mode=0444
+        recurse="yes"
+  when: zeppelin_install_data_starwarskid
+
+# - name: Start Zeppelin Service
+#   service: name=zeppelin
+#            state=started
+#            enabled=yes

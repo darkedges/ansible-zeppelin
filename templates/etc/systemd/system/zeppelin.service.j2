@@ -1,0 +1,13 @@
+[Unit]
+Description=Zeppelin Server
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart={{ zeppelin_usr_dir }}/bin/zeppelin-daemon.sh start
+ExecStop={{ zeppelin_usr_dir }}/bin/zeppelin-daemon.sh stop
+ExecReload={{ zeppelin_usr_dir }}/bin/zeppelin-daemon.sh reload
+User={{ zeppelin_user }}
+
+[Install]
+WantedBy=multi-user.target
