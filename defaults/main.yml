@@ -3,6 +3,7 @@ zeppelin_version: 0.7.0
 zeppelin_mirror: http://apache.mirror.digitalpacific.com.au
 zeppelin_src_file: "zeppelin-{{ zeppelin_version }}-bin-all.tgz"
 zeppelin_url: "{{ zeppelin_mirror }}/zeppelin/zeppelin-{{ zeppelin_version }}/{{ zeppelin_src_file }}"
+zeppelin_url_md5: "md5:330484bfd528ff8868e48d4e4e474d94"
 
 zeppelin_install_spark: no
 zeppelin_install_sbt: no

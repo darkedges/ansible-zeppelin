@@ -23,7 +23,7 @@
 - name: Download Zeppelin distribution
   get_url: url="{{ zeppelin_url }}"
            dest="/tmp/{{ zeppelin_src_file }}"
-           checksum="md5:d5602ec30b578563837e874f87238de5"
+           checksum="{{ zeppelin_url_md5 }}"
 
 - name: Extract Zeppelin distribution
   unarchive: src="/tmp/{{ zeppelin_src_file }}"
