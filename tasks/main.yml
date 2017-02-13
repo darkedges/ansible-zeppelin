@@ -74,7 +74,7 @@
 - name: bug in synchronize
   file: path="{{ zeppelin_dataset_dir }}"
         state=directory
-        mode=0444
+        mode=0555
         recurse="yes"
   when: zeppelin_install_data_starwarskid
 
